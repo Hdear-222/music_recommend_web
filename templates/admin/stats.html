@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}数据统计 - 音乐推荐系统{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="admin-header">
+        <h1>数据统计</h1>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-label">总用户数</div>
+            <div class="stat-value">{{ stats.users }}</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">总歌曲数</div>
+            <div class="stat-value">{{ stats.songs }}</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">总歌手数</div>
+            <div class="stat-value">{{ stats.singers }}</div>
+        </div>
+    </div>
+
+    <div class="top-songs">
+        <h2>热门歌曲 TOP 10</h2>
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>排名</th>
+                    <th>歌曲名</th>
+                    <th>歌手</th>
+                    <th>播放数</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for song in stats.top_songs %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td><a href="{{ url_for('main.song_detail', song_id=song.id) }}">{{ song.title }}</a></td>
+                        <td>{{ song.singer.name }}</td>
+                        <td>{{ song.play_count }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
